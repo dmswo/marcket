@@ -1,6 +1,7 @@
 package carrotMarcket.marcket.entity;
 
 import carrotMarcket.marcket.entity.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -30,6 +31,7 @@ public class Question extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private QuestionStatus questionStatus;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question")
     private final List<Answer> answer = new ArrayList<>();
 
