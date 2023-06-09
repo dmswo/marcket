@@ -5,10 +5,7 @@ import carrotMarcket.marcket.service.AnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,10 +17,17 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> QuestionSave(@RequestBody @Valid AnswerSaveDto answerSaveDto) {
-        System.out.println("start---");
+    public ResponseEntity<?> AnswerSave(@RequestBody @Valid AnswerSaveDto answerSaveDto) {
         Long answer = answerService.save(answerSaveDto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(answer);
     }
+
+    @DeleteMapping("/delete/{answerId}")
+    public ResponseEntity<?> AnswerDelete(@PathVariable Long answerId) {
+        answerService.deleteById(answerId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(answerId);
+    }
+
 }

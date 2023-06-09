@@ -33,4 +33,8 @@ public class AnswerService {
 
         return save.getId();
     }
+
+    public void deleteById(Long id) {
+        answerRepository.deleteById(id);
+    }
 }
