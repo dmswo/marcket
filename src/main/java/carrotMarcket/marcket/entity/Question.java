@@ -32,7 +32,7 @@ public class Question extends BaseEntity {
     private QuestionStatus questionStatus;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private final List<Answer> answer = new ArrayList<>();
 
     public void edit(String title, String text) {

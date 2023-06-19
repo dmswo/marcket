@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -84,5 +85,33 @@ class AnswerControllerTest {
         Answer answer = answerRepository.findAll().get(0);
         Assertions.assertEquals("reply", answer.getText());
         Assertions.assertEquals(1L, answer.getId());
+    }
+
+    @Test
+    @DisplayName("답변 삭제 성공")
+    public void deleteSuccess() throws Exception {
+        // given
+        Question question = Question.builder()
+                .text("text")
+                .title("title")
+                .build();
+
+        Answer answer = Answer.builder()
+                .text("reply")
+                .build();
+
+        questionRepository.save(question);
+        answerRepository.save(answer);
+        Answer result = answerRepository.findAll().get(0);
+
+        // when
+        mockMvc.perform(delete("/answer/delete/{answerId}", result.getId())
+                .contentType(APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        // then
+        Assertions.assertEquals(0L, answerRepository.count());
     }
 }
