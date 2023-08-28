@@ -16,6 +16,11 @@ public class AnswerController {
 
     private final AnswerService answerService;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello1";
+    }
+
     @PostMapping("/save")
     public ResponseEntity<?> AnswerSave(@RequestBody @Valid AnswerSaveDto answerSaveDto) {
         Long answer = answerService.save(answerSaveDto);
