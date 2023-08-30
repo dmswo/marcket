@@ -18,7 +18,7 @@ public class AnswerController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "Hello11111";
+        return "Hello";
     }
 
     @PostMapping("/save")
