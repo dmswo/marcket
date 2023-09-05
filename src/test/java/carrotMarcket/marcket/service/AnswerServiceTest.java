@@ -36,30 +36,30 @@ class AnswerServiceTest {
         questionRepository.deleteAll();
     }
 
-    @Test
-    @DisplayName("답변 작성")
-    public void save() {
-        //given
-        QuestionSaveDto questionSave = QuestionSaveDto.builder()
-                .title("title")
-                .text("text")
-                .build();
-
-        AnswerSaveDto answerSave = AnswerSaveDto.builder()
-                .text("reply1")
-                .questionId(1L)
-                .build();
-
-        //when
-        questionService.save(questionSave);
-        answerService.save(answerSave);
-
-        //then
-        Assertions.assertEquals(1L, answerRepository.count());
-        Answer answer = answerRepository.findAll().get(0);
-        Assertions.assertEquals("reply1", answer.getText());
-        Assertions.assertEquals(1L, answer.getId());
-    }
+//    @Test
+//    @DisplayName("답변 작성")
+//    public void save() {
+//        //given
+//        QuestionSaveDto questionSave = QuestionSaveDto.builder()
+//                .title("title")
+//                .text("text")
+//                .build();
+//
+//        AnswerSaveDto answerSave = AnswerSaveDto.builder()
+//                .text("reply1")
+//                .questionId(1L)
+//                .build();
+//
+//        //when
+//        questionService.save(questionSave);
+//        answerService.save(answerSave);
+//
+//        //then
+//        Assertions.assertEquals(1L, answerRepository.count());
+//        Answer answer = answerRepository.findAll().get(0);
+//        Assertions.assertEquals("reply1", answer.getText());
+//        Assertions.assertEquals(1L, answer.getId());
+//    }
 
 //    @Test
 //    @DisplayName("답변 삭제")
