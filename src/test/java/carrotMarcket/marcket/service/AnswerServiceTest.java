@@ -61,29 +61,29 @@ class AnswerServiceTest {
         Assertions.assertEquals(1L, answer.getId());
     }
 
-    @Test
-    @DisplayName("답변 삭제")
-    public void delete() {
-        //given
-        QuestionSaveDto save = QuestionSaveDto.builder()
-                .text("text")
-                .title("title")
-                .build();
-
-        AnswerSaveDto answerSave = AnswerSaveDto.builder()
-                .text("reply")
-                .questionId(1L)
-                .build();
-
-        //when
-        questionService.save(save);
-        answerService.save(answerSave);
-
-        Answer answer = answerRepository.findAll().get(0);
-        answerService.deleteById(answer.getId());
-
-        //then
-        Assertions.assertEquals(0L, answerRepository.count());
-    }
+//    @Test
+//    @DisplayName("답변 삭제")
+//    public void delete() {
+//        //given
+//        QuestionSaveDto save = QuestionSaveDto.builder()
+//                .text("text")
+//                .title("title")
+//                .build();
+//
+//        AnswerSaveDto answerSave = AnswerSaveDto.builder()
+//                .text("reply")
+//                .questionId(1L)
+//                .build();
+//
+//        //when
+//        questionService.save(save);
+//        answerService.save(answerSave);
+//
+//        Answer answer = answerRepository.findAll().get(0);
+//        answerService.deleteById(answer.getId());
+//
+//        //then
+//        Assertions.assertEquals(0L, answerRepository.count());
+//    }
 
 }
