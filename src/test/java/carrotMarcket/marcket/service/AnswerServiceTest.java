@@ -58,7 +58,7 @@ class AnswerServiceTest {
         Assertions.assertEquals(1L, answerRepository.count());
         Answer answer = answerRepository.findAll().get(0);
         Assertions.assertEquals("reply1", answer.getText());
-        Assertions.assertEquals(save, answer.getId());
+        Assertions.assertEquals(save, answer.getQuestion().getId());
     }
 
     @Test
@@ -69,16 +69,15 @@ class AnswerServiceTest {
                 .text("text")
                 .title("title")
                 .build();
+        Long questionId = questionService.save(save);
 
         AnswerSaveDto answerSave = AnswerSaveDto.builder()
                 .text("reply")
-                .questionId(1L)
+                .questionId(questionId)
                 .build();
-
-        //when
-        questionService.save(save);
         answerService.save(answerSave);
 
+        //when
         Answer answer = answerRepository.findAll().get(0);
         answerService.deleteById(answer.getId());
 
