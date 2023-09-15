@@ -60,7 +60,7 @@ class AnswerServiceTest {
 //        Assertions.assertEquals("reply1", answer.getText());
 //        Assertions.assertEquals(save, answer.getId());
 //    }
-//
+
 //    @Test
 //    @DisplayName("답변 삭제")
 //    public void delete() {
