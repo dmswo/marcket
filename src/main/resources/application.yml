@@ -24,3 +24,11 @@ spring:
       pageable:
         one-indexed-parameters: true
         default-page-size: 10
+  spring:
+    devtools:
+      livereload:
+        enabled: true
+      restart:
+        enabled: false
+    thymeleaf:
+      cache: false
