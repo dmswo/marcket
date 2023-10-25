@@ -24,11 +24,33 @@ spring:
       pageable:
         one-indexed-parameters: true
         default-page-size: 10
-  spring:
-    devtools:
-      livereload:
-        enabled: true
-      restart:
-        enabled: false
-    thymeleaf:
-      cache: false
+#  spring:
+#    devtools:
+#      livereload:
+#        enabled: true
+#      restart:
+#        enabled: false
+#    thymeleaf:
+#      cache: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+---
+spring:
+  config:
+    activate:
+      on-profile: was1
+server:
+  port: 8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: was2
+server:
+  port: 8090
