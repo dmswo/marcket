@@ -45,7 +45,7 @@ spring:
     activate:
       on-profile: was1
 server:
-  port: 8080
+  port: 8090
 
 ---
 spring:
@@ -53,4 +53,4 @@ spring:
     activate:
       on-profile: was2
 server:
-  port: 8090
+  port: 8091
