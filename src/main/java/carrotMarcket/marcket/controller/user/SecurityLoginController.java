@@ -55,7 +55,7 @@ public class SecurityLoginController {
 
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
-            bindingResult.addError(new FieldError("joinRequest", "loginId", "로그인 아이디가 중복됩니다."));
+            bindingResult.addError(new FieldError("joinRequest", "loginId", "로그인 아이디가 중복됩니다.1"));
         }
         // 닉네임 중복 체크
         if(userService.checkNicknameDuplicate(joinRequest.getNickname())) {
