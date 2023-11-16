@@ -1,12 +1,10 @@
-package carrotMarcket.marcket.service;
+package carrotMarcket.marcket.board.service;
 
 import carrotMarcket.marcket.board.entity.Answer;
 import carrotMarcket.marcket.board.repository.AnswerRepository;
-import carrotMarcket.marcket.board.repository.QuestionRepository;
+import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.request.AnswerSaveDto;
-import carrotMarcket.marcket.board.request.QuestionSaveDto;
-import carrotMarcket.marcket.board.service.AnswerService;
-import carrotMarcket.marcket.board.service.QuestionService;
+import carrotMarcket.marcket.board.request.BoardSaveDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,26 +21,26 @@ class AnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Autowired
-    private QuestionService questionService;
+    private BoardService boardService;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private BoardRepository boardRepository;
 
     @BeforeEach
     void clean() {
         answerRepository.deleteAll();
-        questionRepository.deleteAll();
+        boardRepository.deleteAll();
     }
 
     @Test
     @DisplayName("답변 작성")
     public void save() {
         //given
-        QuestionSaveDto questionSave = QuestionSaveDto.builder()
+        BoardSaveDto boardSave = BoardSaveDto.builder()
                 .title("title")
                 .text("text")
                 .build();
-        Long save = questionService.save(questionSave);
+        Long save = boardService.save(boardSave);
 
         AnswerSaveDto answerSave = AnswerSaveDto.builder()
                 .text("reply1")
@@ -56,18 +54,18 @@ class AnswerServiceTest {
         Assertions.assertEquals(1L, answerRepository.count());
         Answer answer = answerRepository.findAll().get(0);
         Assertions.assertEquals("reply1", answer.getText());
-        Assertions.assertEquals(save, answer.getQuestion().getId());
+        Assertions.assertEquals(save, answer.getBoard().getId());
     }
 
     @Test
     @DisplayName("답변 삭제")
     public void delete() {
         //given
-        QuestionSaveDto save = QuestionSaveDto.builder()
+        BoardSaveDto save = BoardSaveDto.builder()
                 .text("text")
                 .title("title")
                 .build();
-        Long questionId = questionService.save(save);
+        Long questionId = boardService.save(save);
 
         AnswerSaveDto answerSave = AnswerSaveDto.builder()
                 .text("reply")

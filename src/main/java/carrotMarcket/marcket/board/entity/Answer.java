@@ -23,6 +23,6 @@ public class Answer extends BaseEntity {
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "QUESTION_ID")
-    private Question question;
+    @JoinColumn(name = "BOARD_ID")
+    private Board board;
 }

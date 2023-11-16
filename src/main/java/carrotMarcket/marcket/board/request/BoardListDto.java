@@ -1,12 +1,12 @@
 package carrotMarcket.marcket.board.request;
 
-import carrotMarcket.marcket.board.entity.QuestionStatus;
+import carrotMarcket.marcket.board.constant.BoardStatus;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class QuestionListDto {
+public class BoardListDto {
     private String title;
-    private QuestionStatus status;
+    private BoardStatus status;
 }

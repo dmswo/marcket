@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuestionSaveDto {
+public class BoardSaveDto {
 
     @NotBlank(message = "타이틀을 입력해주세요.")
     private String title;

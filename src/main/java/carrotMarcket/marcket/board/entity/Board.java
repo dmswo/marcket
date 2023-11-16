@@ -1,5 +1,6 @@
 package carrotMarcket.marcket.board.entity;
 
+import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.entity.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -15,11 +16,11 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-public class Question extends BaseEntity {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "QUESTION_ID")
+    @Column(name = "BOARD_ID")
     private Long id;
 
     @Column(nullable = false, length = 200)
@@ -29,10 +30,10 @@ public class Question extends BaseEntity {
     private String text;
 
     @Enumerated(EnumType.STRING)
-    private QuestionStatus questionStatus;
+    private BoardStatus boardStatus;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private final List<Answer> answer = new ArrayList<>();
 
     public void edit(String title, String text) {
