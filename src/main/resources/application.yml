@@ -24,14 +24,9 @@ spring:
       pageable:
         one-indexed-parameters: true
         default-page-size: 10
-#  spring:
-#    devtools:
-#      livereload:
-#        enabled: true
-#      restart:
-#        enabled: false
-#    thymeleaf:
-#      cache: false
+
+jwt:
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
 
 management:
   endpoints:

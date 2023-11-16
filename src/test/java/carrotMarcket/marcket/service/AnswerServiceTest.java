@@ -1,20 +1,18 @@
 package carrotMarcket.marcket.service;
 
-import carrotMarcket.marcket.entity.Answer;
-import carrotMarcket.marcket.entity.Question;
-import carrotMarcket.marcket.entity.QuestionStatus;
-import carrotMarcket.marcket.repository.AnswerRepository;
-import carrotMarcket.marcket.repository.QuestionRepository;
-import carrotMarcket.marcket.request.AnswerSaveDto;
-import carrotMarcket.marcket.request.QuestionSaveDto;
+import carrotMarcket.marcket.board.entity.Answer;
+import carrotMarcket.marcket.board.repository.AnswerRepository;
+import carrotMarcket.marcket.board.repository.QuestionRepository;
+import carrotMarcket.marcket.board.request.AnswerSaveDto;
+import carrotMarcket.marcket.board.request.QuestionSaveDto;
+import carrotMarcket.marcket.board.service.AnswerService;
+import carrotMarcket.marcket.board.service.QuestionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AnswerServiceTest {

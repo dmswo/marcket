@@ -1,14 +1,13 @@
 package carrotMarcket.marcket.controller;
 
-import carrotMarcket.marcket.entity.Answer;
-import carrotMarcket.marcket.entity.Question;
-import carrotMarcket.marcket.entity.QuestionStatus;
-import carrotMarcket.marcket.repository.AnswerRepository;
-import carrotMarcket.marcket.repository.QuestionRepository;
-import carrotMarcket.marcket.request.AnswerSaveDto;
-import carrotMarcket.marcket.request.QuestionSaveDto;
-import carrotMarcket.marcket.service.AnswerService;
-import carrotMarcket.marcket.service.QuestionService;
+import carrotMarcket.marcket.board.entity.Answer;
+import carrotMarcket.marcket.board.entity.Question;
+import carrotMarcket.marcket.board.repository.AnswerRepository;
+import carrotMarcket.marcket.board.repository.QuestionRepository;
+import carrotMarcket.marcket.board.request.AnswerSaveDto;
+import carrotMarcket.marcket.board.request.QuestionSaveDto;
+import carrotMarcket.marcket.board.service.AnswerService;
+import carrotMarcket.marcket.board.service.QuestionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

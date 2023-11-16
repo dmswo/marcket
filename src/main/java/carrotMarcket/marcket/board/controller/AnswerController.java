@@ -1,0 +1,33 @@
+package carrotMarcket.marcket.board.controller;
+
+import carrotMarcket.marcket.board.request.AnswerSaveDto;
+import carrotMarcket.marcket.board.service.AnswerService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/answer")
+public class AnswerController {
+
+    private final AnswerService answerService;
+
+    @PostMapping("/save")
+    public ResponseEntity<?> AnswerSave(@RequestBody @Valid AnswerSaveDto answerSaveDto) {
+        Long answer = answerService.save(answerSaveDto);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(answer);
+    }
+
+    @DeleteMapping("/delete/{answerId}")
+    public ResponseEntity<?> AnswerDelete(@PathVariable Long answerId) {
+        answerService.deleteById(answerId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(answerId);
+    }
+
+}

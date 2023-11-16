@@ -1,12 +1,13 @@
 package carrotMarcket.marcket.service;
 
-import carrotMarcket.marcket.entity.Question;
-import carrotMarcket.marcket.entity.QuestionStatus;
-import carrotMarcket.marcket.repository.QuestionRepository;
-import carrotMarcket.marcket.request.QuestionEdit;
-import carrotMarcket.marcket.request.QuestionListDto;
-import carrotMarcket.marcket.request.QuestionSaveDto;
-import carrotMarcket.marcket.response.QuestionListResponse;
+import carrotMarcket.marcket.board.entity.Question;
+import carrotMarcket.marcket.board.entity.QuestionStatus;
+import carrotMarcket.marcket.board.repository.QuestionRepository;
+import carrotMarcket.marcket.board.request.QuestionEdit;
+import carrotMarcket.marcket.board.request.QuestionListDto;
+import carrotMarcket.marcket.board.request.QuestionSaveDto;
+import carrotMarcket.marcket.board.response.QuestionListResponse;
+import carrotMarcket.marcket.board.service.QuestionService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
