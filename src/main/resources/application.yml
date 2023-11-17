@@ -25,6 +25,12 @@ spring:
         one-indexed-parameters: true
         default-page-size: 10
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    messages:
+      basename: messages
+
 jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
 
