@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
-public class AnswerSaveDto {
+public class CommentSaveDto {
 
-    private Long questionId;
+    private Long boardId;
 
     @NotBlank(message = "텍스트를 입력해주세요.")
     private String text;

@@ -34,7 +34,7 @@ public class Board extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private final List<Answer> answer = new ArrayList<>();
+    private final List<Comment> reply = new ArrayList<>();
 
     public void edit(String title, String text) {
         this.title = title;

@@ -29,14 +29,15 @@ public class BoardController {
 
     @PostMapping("/save")
     public ResponseEntity<?> BoardSave(@RequestBody @Valid BoardSaveDto boardSaveDto) {
-        Long question = boardService.save(boardSaveDto);
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(question));
+        Long board = boardService.save(boardSaveDto);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(board));
     }
 
     @PatchMapping("/update")
     public ResponseEntity<?> BoardEdit(@RequestParam Long boardId, @RequestBody @Valid BoardEdit request) {
         boardService.edit(boardId, request);
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithNoContent());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.successWithNoContent());
     }
 
     @DeleteMapping("/delete")

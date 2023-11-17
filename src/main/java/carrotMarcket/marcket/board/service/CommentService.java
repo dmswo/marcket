@@ -1,12 +1,12 @@
 package carrotMarcket.marcket.board.service;
 
 import carrotMarcket.marcket.board.entity.Board;
-import carrotMarcket.marcket.board.repository.AnswerRepository;
+import carrotMarcket.marcket.board.repository.CommentRepository;
 import carrotMarcket.marcket.board.repository.BoardRepository;
-import carrotMarcket.marcket.board.entity.Answer;
+import carrotMarcket.marcket.board.entity.Comment;
 import carrotMarcket.marcket.board.exception.BoardBusinessException;
 import carrotMarcket.marcket.board.exception.BoardExceptionCode;
-import carrotMarcket.marcket.board.request.AnswerSaveDto;
+import carrotMarcket.marcket.board.request.CommentSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,25 +14,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AnswerService {
+public class CommentService {
 
-    private final AnswerRepository answerRepository;
+    private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
 
-    public Long save(AnswerSaveDto answerSaveDto) {
-        Board board = boardRepository.findById(answerSaveDto.getQuestionId())
+    public Long save(CommentSaveDto commentSaveDto) {
+        Board board = boardRepository.findById(commentSaveDto.getBoardId())
                 .orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
 
-        Answer answer = Answer.builder()
-                .text(answerSaveDto.getText())
+        Comment comment = Comment.builder()
+                .text(commentSaveDto.getText())
                 .board(board)
                 .build();
-        Answer save = answerRepository.save(answer);
+        Comment save = commentRepository.save(comment);
 
         return save.getId();
     }
 
     public void deleteById(Long id) {
-        answerRepository.deleteById(id);
+        commentRepository.deleteById(id);
     }
 }

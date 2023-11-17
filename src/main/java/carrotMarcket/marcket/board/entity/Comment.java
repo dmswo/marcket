@@ -12,11 +12,11 @@ import javax.persistence.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-public class Answer extends BaseEntity {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ANSWER_ID")
+    @Column(name = "COMMENT_ID")
     private Long id;
 
     @Column(columnDefinition = "Text", nullable = false)

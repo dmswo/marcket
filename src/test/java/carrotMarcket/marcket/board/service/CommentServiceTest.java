@@ -1,9 +1,9 @@
 package carrotMarcket.marcket.board.service;
 
-import carrotMarcket.marcket.board.entity.Answer;
-import carrotMarcket.marcket.board.repository.AnswerRepository;
+import carrotMarcket.marcket.board.entity.Comment;
+import carrotMarcket.marcket.board.repository.CommentRepository;
 import carrotMarcket.marcket.board.repository.BoardRepository;
-import carrotMarcket.marcket.board.request.AnswerSaveDto;
+import carrotMarcket.marcket.board.request.CommentSaveDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AnswerServiceTest {
+class CommentServiceTest {
     @Autowired
-    private AnswerService answerService;
+    private CommentService commentService;
 
     @Autowired
-    private AnswerRepository answerRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
     private BoardService boardService;
@@ -28,7 +28,7 @@ class AnswerServiceTest {
 
     @BeforeEach
     void clean() {
-        answerRepository.deleteAll();
+        commentRepository.deleteAll();
         boardRepository.deleteAll();
     }
 
@@ -42,19 +42,19 @@ class AnswerServiceTest {
                 .build();
         Long save = boardService.save(boardSave);
 
-        AnswerSaveDto answerSave = AnswerSaveDto.builder()
-                .text("reply1")
-                .questionId(save)
+        CommentSaveDto commentSave = CommentSaveDto.builder()
+                .text("comment1")
+                .boardId(save)
                 .build();
-        answerService.save(answerSave);
+        commentService.save(commentSave);
 
         //when
 
         //then
-        Assertions.assertEquals(1L, answerRepository.count());
-        Answer answer = answerRepository.findAll().get(0);
-        Assertions.assertEquals("reply1", answer.getText());
-        Assertions.assertEquals(save, answer.getBoard().getId());
+        Assertions.assertEquals(1L, commentRepository.count());
+        Comment comment = commentRepository.findAll().get(0);
+        Assertions.assertEquals("comment1", comment.getText());
+        Assertions.assertEquals(save, comment.getBoard().getId());
     }
 
     @Test
@@ -65,20 +65,20 @@ class AnswerServiceTest {
                 .text("text")
                 .title("title")
                 .build();
-        Long questionId = boardService.save(save);
+        Long boardId = boardService.save(save);
 
-        AnswerSaveDto answerSave = AnswerSaveDto.builder()
-                .text("reply")
-                .questionId(questionId)
+        CommentSaveDto answerSave = CommentSaveDto.builder()
+                .text("comment")
+                .boardId(boardId)
                 .build();
-        answerService.save(answerSave);
+        commentService.save(answerSave);
 
         //when
-        Answer answer = answerRepository.findAll().get(0);
-        answerService.deleteById(answer.getId());
+        Comment comment = commentRepository.findAll().get(0);
+        commentService.deleteById(comment.getId());
 
         //then
-        Assertions.assertEquals(0L, answerRepository.count());
+        Assertions.assertEquals(0L, commentRepository.count());
     }
 
 }
