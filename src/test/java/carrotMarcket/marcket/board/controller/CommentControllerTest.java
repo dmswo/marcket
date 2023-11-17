@@ -95,7 +95,7 @@ class CommentControllerTest {
                 .build();
 
         Comment comment = Comment.builder()
-                .text("reply")
+                .text("comment")
                 .build();
 
         boardRepository.save(board);
@@ -103,7 +103,7 @@ class CommentControllerTest {
         Comment result = commentRepository.findAll().get(0);
 
         // when
-        mockMvc.perform(delete("/comment/delete/{answerId}", result.getId())
+        mockMvc.perform(delete("/comment/delete?commentId="+result.getId())
                 .contentType(APPLICATION_JSON)
         )
                 .andExpect(status().isOk())
