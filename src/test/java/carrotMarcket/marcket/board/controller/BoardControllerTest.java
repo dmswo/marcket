@@ -64,7 +64,7 @@ class BoardControllerTest {
         String json = objectMapper.writeValueAsString(search);
 
         // expected
-        mockMvc.perform(get("/board/list")
+        mockMvc.perform(post("/board/list")
                 .contentType(APPLICATION_JSON)
                 .content(json)
         )
