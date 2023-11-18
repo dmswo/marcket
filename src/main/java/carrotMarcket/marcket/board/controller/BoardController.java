@@ -1,8 +1,10 @@
 package carrotMarcket.marcket.board.controller;
 
-import carrotMarcket.marcket.board.request.BoardEdit;
+import carrotMarcket.marcket.board.entity.Board;
+import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
+import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.service.BoardService;
 import carrotMarcket.marcket.global.response.ApiResponse;
 import io.swagger.annotations.Api;
@@ -31,6 +33,13 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(list));
     }
 
+    @GetMapping("/list")
+    @ApiOperation(value="게시글 단건 조회 API", notes="등록된 게시글을 조회합니다.")
+    public ResponseEntity<?> BoardFindById(@RequestParam Long boardId) {
+        BoardFindByIdResponse board = boardService.boardFindById(boardId);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(board));
+    }
+
     @PostMapping("/save")
     @ApiOperation(value="게시글 등록 API", notes="게시글을 등록합니다.")
     public ResponseEntity<?> BoardSave(@RequestBody @Valid BoardSaveDto boardSaveDto) {
@@ -40,8 +49,8 @@ public class BoardController {
 
     @PatchMapping("/update")
     @ApiOperation(value="게시글 수정 API", notes="게시글을 수정합니다.")
-    public ResponseEntity<?> BoardEdit(@RequestParam Long boardId, @RequestBody @Valid BoardEdit request) {
-        boardService.edit(boardId, request);
+    public ResponseEntity<?> BoardUpdate(@RequestParam Long boardId, @RequestBody @Valid BoardUpdateDto boardUpdateDto) {
+        boardService.update(boardId, boardUpdateDto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.successWithNoContent());
     }

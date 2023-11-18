@@ -1,12 +1,14 @@
 package carrotMarcket.marcket.global.security.auth;
 
 import carrotMarcket.marcket.user.entity.Users;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Getter
 public class PrincipalDetails implements UserDetails {
 
     private Users users;

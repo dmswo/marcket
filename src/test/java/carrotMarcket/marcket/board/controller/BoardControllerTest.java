@@ -3,7 +3,7 @@ package carrotMarcket.marcket.board.controller;
 import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.repository.BoardRepository;
-import carrotMarcket.marcket.board.request.BoardEdit;
+import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.mock.WithCustomMockUser;
@@ -47,7 +47,7 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("질문글 여러개 조회")
+    @DisplayName("게시글 여러개 조회")
     void list() throws Exception {
         // given
         List<Board> list = IntStream.range(0, 25)
@@ -75,7 +75,7 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("질문글 작성 성공")
+    @DisplayName("게시글 작성 성공")
     @WithCustomMockUser
     public void saveSuccess() throws Exception {
         // given
@@ -103,7 +103,7 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("질문글 작성 실패(text or title 비어있을경우)")
+    @DisplayName("게시글 작성 실패(text or title 비어있을경우)")
     @WithCustomMockUser
     public void saveFail() throws Exception {
         // given
@@ -125,7 +125,7 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("질문글 수정 성공")
+    @DisplayName("게시글 수정 성공")
     @WithCustomMockUser
     public void updateSuccess() throws Exception {
         // given
@@ -136,12 +136,12 @@ class BoardControllerTest {
         boardRepository.save(save);
         Board result = boardRepository.findAll().get(0);
 
-        BoardEdit boardEdit = BoardEdit.builder()
+        BoardUpdateDto boardUpdateDto = BoardUpdateDto.builder()
                 .text("updateText1")
                 .title("updateTitle1")
                 .build();
 
-        String json = objectMapper.writeValueAsString(boardEdit);
+        String json = objectMapper.writeValueAsString(boardUpdateDto);
 
         // when
         mockMvc.perform(patch("/board/update?boardId="+result.getId()).header("Bearer", "ABCDE")
@@ -159,7 +159,7 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("질문글 수정 실패")
+    @DisplayName("게시글 수정 실패")
     @WithCustomMockUser
     public void updateFail() throws Exception {
         // given
@@ -170,12 +170,12 @@ class BoardControllerTest {
         boardRepository.save(save);
         Board result = boardRepository.findAll().get(0);
 
-        BoardEdit boardEdit = BoardEdit.builder()
+        BoardUpdateDto boardUpdateDto = BoardUpdateDto.builder()
                 .text("updateText1")
                 .title("")
                 .build();
 
-        String json = objectMapper.writeValueAsString(boardEdit);
+        String json = objectMapper.writeValueAsString(boardUpdateDto);
 
         // expect
         mockMvc.perform(patch("/board/update?boardId="+result.getId()).header("Bearer", "ABCDE")
@@ -189,7 +189,7 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("질문글 삭제 성공")
+    @DisplayName("게시글 삭제 성공")
     @WithCustomMockUser
     public void deleteSuccess() throws Exception {
         // given

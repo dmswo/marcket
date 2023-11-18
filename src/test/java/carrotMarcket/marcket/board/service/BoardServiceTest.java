@@ -3,7 +3,7 @@ package carrotMarcket.marcket.board.service;
 import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.repository.BoardRepository;
-import carrotMarcket.marcket.board.request.BoardEdit;
+import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardListResponse;
@@ -95,13 +95,13 @@ class BoardServiceTest {
 
         boardRepository.save(save);
 
-        BoardEdit update = BoardEdit.builder()
+        BoardUpdateDto update = BoardUpdateDto.builder()
                 .text("updateText1")
                 .title("updateTitle1")
                 .build();
 
         //when
-        boardService.edit(save.getId(), update);
+        boardService.update(save.getId(), update);
 
         //then
         Board board1 = boardRepository.findById(save.getId()).orElseThrow(() -> new RuntimeException("질문글이 존재하지 않습니다."));

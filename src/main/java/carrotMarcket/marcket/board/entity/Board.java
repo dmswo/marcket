@@ -1,12 +1,13 @@
 package carrotMarcket.marcket.board.entity;
 
 import carrotMarcket.marcket.board.constant.BoardStatus;
-import carrotMarcket.marcket.board.entity.common.BaseEntity;
+import carrotMarcket.marcket.global.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private final List<Comment> reply = new ArrayList<>();
 
-    public void edit(String title, String text) {
+    public void update(String title, String text) {
         this.title = title;
         this.text = text;
     }

@@ -5,9 +5,11 @@ import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.exception.BoardBusinessException;
 import carrotMarcket.marcket.board.exception.BoardExceptionCode;
-import carrotMarcket.marcket.board.request.BoardEdit;
+import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
+import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
+import carrotMarcket.marcket.board.response.BoardListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,11 @@ public class BoardService {
         return boardRepository.boardList(boardListDto, pageable);
     }
 
+    public BoardFindByIdResponse boardFindById(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
+        return new BoardFindByIdResponse(board);
+    }
+
     public Long save(BoardSaveDto boardSaveDto) {
         Board board = Board.builder()
                 .title(boardSaveDto.getTitle())
@@ -36,9 +43,9 @@ public class BoardService {
         return save.getId();
     }
 
-    public void edit(Long id, BoardEdit boardEdit) {
+    public void update(Long id, BoardUpdateDto boardUpdateDto) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
-        board.edit(boardEdit.getTitle(), boardEdit.getText());
+        board.update(boardUpdateDto.getTitle(), boardUpdateDto.getText());
     }
 
     public void deleteById(Long id) {

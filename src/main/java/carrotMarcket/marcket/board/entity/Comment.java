@@ -1,6 +1,6 @@
 package carrotMarcket.marcket.board.entity;
 
-import carrotMarcket.marcket.board.entity.common.BaseEntity;
+import carrotMarcket.marcket.global.entity.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -25,4 +25,8 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOARD_ID")
     private Board board;
+
+    public void update(String text) {
+        this.text = text;
+    }
 }
