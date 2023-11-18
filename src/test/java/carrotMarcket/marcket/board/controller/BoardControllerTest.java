@@ -6,6 +6,7 @@ import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
+import carrotMarcket.marcket.board.service.BoardService;
 import carrotMarcket.marcket.mock.WithCustomMockUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -39,6 +40,9 @@ class BoardControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
+    private BoardService boardService;
+
+    @Autowired
     private BoardRepository boardRepository;
 
     @BeforeEach
@@ -64,13 +68,34 @@ class BoardControllerTest {
         String json = objectMapper.writeValueAsString(search);
 
         // expected
-        mockMvc.perform(post("/board/list")
+        mockMvc.perform(post("/board/list?page=1")
                 .contentType(APPLICATION_JSON)
                 .content(json)
         )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.content.length()", is(10)))
                 .andExpect(jsonPath("$.data.content[9].title").value("title9"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("게시글 단건 조회")
+    void boardFindById() throws Exception {
+        // given
+        BoardSaveDto save = BoardSaveDto.builder()
+                .text("text1")
+                .title("title1")
+                .build();
+
+        Long boardId = boardService.save(save);
+
+        // expected
+        mockMvc.perform(get("/board/boardFindById?boardId="+boardId).header("Bearer", "ABCDE")
+                        .contentType(APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.text").value("text1"))
+                .andExpect(jsonPath("$.data.title").value("title1"))
                 .andDo(print());
     }
 

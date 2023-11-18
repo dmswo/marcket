@@ -6,6 +6,7 @@ import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
+import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardListResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("질문글 여러개 조회")
+    @DisplayName("게시글 여러개 조회")
     public void list() {
         //given
         List<Board> list = IntStream.range(0, 25)
@@ -65,7 +66,26 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("질문글 작성")
+    @DisplayName("게시글 단건 조회")
+    public void boardFindById() {
+        //given
+        BoardSaveDto save = BoardSaveDto.builder()
+                .text("text1")
+                .title("title1")
+                .build();
+
+        Long boardId = boardService.save(save);
+
+        //when
+        BoardFindByIdResponse response = boardService.boardFindById(boardId);
+
+        //then
+        assertEquals("title1", response.getTitle());
+        assertEquals("text1", response.getText());
+    }
+
+    @Test
+    @DisplayName("게시글 작성")
     public void save() {
         //given
         BoardSaveDto save = BoardSaveDto.builder()
@@ -85,7 +105,7 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("질문글 수정")
+    @DisplayName("게시글 수정")
     public void update() {
         //given
         Board save = Board.builder()
@@ -110,7 +130,7 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("질문글 삭제")
+    @DisplayName("게시글 삭제")
     public void delete() {
         //given
         BoardSaveDto save = BoardSaveDto.builder()

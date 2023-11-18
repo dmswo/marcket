@@ -33,7 +33,7 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(list));
     }
 
-    @GetMapping("/list")
+    @GetMapping("/boardFindById")
     @ApiOperation(value="게시글 단건 조회 API", notes="등록된 게시글을 조회합니다.")
     public ResponseEntity<?> BoardFindById(@RequestParam Long boardId) {
         BoardFindByIdResponse board = boardService.boardFindById(boardId);
@@ -51,8 +51,7 @@ public class BoardController {
     @ApiOperation(value="게시글 수정 API", notes="게시글을 수정합니다.")
     public ResponseEntity<?> BoardUpdate(@RequestParam Long boardId, @RequestBody @Valid BoardUpdateDto boardUpdateDto) {
         boardService.update(boardId, boardUpdateDto);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(ApiResponse.successWithNoContent());
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithNoContent());
     }
 
     @DeleteMapping("/delete")
