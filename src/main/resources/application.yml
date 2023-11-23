@@ -31,6 +31,10 @@ spring:
     messages:
       basename: messages
 
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
 jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
 

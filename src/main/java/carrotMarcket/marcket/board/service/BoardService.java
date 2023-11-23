@@ -10,9 +10,12 @@ import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardListResponse;
+import carrotMarcket.marcket.global.redis.RedisService;
+import carrotMarcket.marcket.global.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final RedisService redisService;
 
     public Page boardList(BoardListDto boardListDto, Pageable pageable) {
         return boardRepository.boardList(boardListDto, pageable);
@@ -29,7 +33,11 @@ public class BoardService {
 
     public BoardFindByIdResponse boardFindById(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
-        return new BoardFindByIdResponse(board);
+
+        // redis 활용한 조회수
+        String view = redisService.view(boardId);
+
+        return new BoardFindByIdResponse(board, Long.parseLong(view));
     }
 
     public Long save(BoardSaveDto boardSaveDto) {
