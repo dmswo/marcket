@@ -1,5 +1,7 @@
 package carrotMarcket.marcket.global.redis;
 
+import carrotMarcket.marcket.board.entity.Board;
+import carrotMarcket.marcket.board.request.BoardLikeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -8,18 +10,20 @@ import org.springframework.stereotype.Component;
 public class RedisService {
 
     private final RedisUtil redisUtil;
+    private static final String KEY_LIKE = "board:like:";
 
-    private static final String KEY_LIKE = "board:view:";
 
-    public String view(Long boardId) {
-        String values = redisUtil.getValues(KEY_LIKE+boardId);
-        if (values == null) {
-            redisUtil.setValues(KEY_LIKE + boardId, "1");
+    // 좋아요 로직
+    public Boolean like(BoardLikeDto boardLikeDto) {
+        Long boardId = boardLikeDto.getBoardId();
+        String userId = boardLikeDto.getUserId();
+        Boolean like = boardLikeDto.getLike();
+        if (like == false) {
+            redisUtil.like(KEY_LIKE + boardId, userId);
         } else {
-            int increment = Integer.parseInt(values) + 1;
-            redisUtil.setValues(KEY_LIKE + boardId, String.valueOf(increment));
+            redisUtil.unLike(KEY_LIKE + boardId, userId);
         }
 
-        return redisUtil.getValues(KEY_LIKE + boardId);
+        return true;
     }
 }

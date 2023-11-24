@@ -4,6 +4,7 @@ import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.global.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -33,6 +34,9 @@ public class Board extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private BoardStatus boardStatus;
 
+    @ColumnDefault("0")
+    private Long views;
+
     @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private final List<Comment> reply = new ArrayList<>();
@@ -40,5 +44,9 @@ public class Board extends BaseEntity {
     public void update(String title, String text) {
         this.title = title;
         this.text = text;
+    }
+
+    public void updateViews(Long views) {
+        this.views = views;
     }
 }

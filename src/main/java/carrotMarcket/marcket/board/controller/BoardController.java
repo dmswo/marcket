@@ -1,6 +1,7 @@
 package carrotMarcket.marcket.board.controller;
 
 import carrotMarcket.marcket.board.entity.Board;
+import carrotMarcket.marcket.board.request.BoardLikeDto;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
@@ -59,5 +60,12 @@ public class BoardController {
     public ResponseEntity<?> BoardDelete(@RequestParam Long boardId) {
         boardService.deleteById(boardId);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithNoContent());
+    }
+
+    @PostMapping("/like")
+    @ApiOperation(value="좋아요 API", notes="게시글에대한 좋아요 정보 수정")
+    public ResponseEntity<?> BoardLike(@RequestBody @Valid BoardLikeDto boardLikeDto) {
+        boolean like = boardService.like(boardLikeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(like));
     }
 }
