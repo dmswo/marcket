@@ -22,14 +22,4 @@ public class BoardFindByIdResponse {
     private String regID;
     private LocalDateTime regDate;
     private Long views;
-
-    public BoardFindByIdResponse(Board board, Long views) {
-        this.id = board.getId();
-        this.title = board.getTitle();
-        this.text = board.getText();
-        this.boardStatus = board.getBoardStatus();
-        this.regID = board.getRegID();
-        this.regDate = board.getRegDate();
-        this.views = views;
-    }
 }

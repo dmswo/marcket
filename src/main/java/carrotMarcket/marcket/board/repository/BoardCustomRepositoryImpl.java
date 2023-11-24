@@ -27,7 +27,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
 
     @Override
     public Page boardList(BoardListDto boardListDto, Pageable pageable) {
-        List<BoardListResponse> content = queryFactory.select(new QBoardListResponse(board.id, board.title, board.boardStatus, board.regDate))
+        List<BoardListResponse> content = queryFactory.select(new QBoardListResponse(board.id, board.title, board.boardStatus, board.regDate, board.views))
                 .from(board)
                 .where(statusEq(boardListDto.getStatus())
                         , titleContains(boardListDto.getTitle()))
@@ -35,7 +35,7 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<BoardListResponse> count = queryFactory.select(new QBoardListResponse(board.id, board.title, board.boardStatus, board.regDate))
+        JPAQuery<BoardListResponse> count = queryFactory.select(new QBoardListResponse(board.id, board.title, board.boardStatus, board.regDate, board.views))
                 .from(board)
                 .where(statusEq(boardListDto.getStatus())
                         , titleContains(boardListDto.getTitle()));

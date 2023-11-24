@@ -11,6 +11,7 @@ import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardLikeResponse;
+import carrotMarcket.marcket.board.response.BoardListResponse;
 import carrotMarcket.marcket.global.redis.RedisService;
 import carrotMarcket.marcket.global.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +37,16 @@ public class BoardService {
     private static final String KEY_LIKE = "board:like:";
 
     public Page boardList(BoardListDto boardListDto, Pageable pageable) {
-        return boardRepository.boardList(boardListDto, pageable);
+        Page<BoardListResponse> page = boardRepository.boardList(boardListDto, pageable);
+
+        for (BoardListResponse response : page) {
+            Long id = response.getId();
+            Long views = response.getViews();
+            String values = redisUtil.getValues(KEY_VIEW + id) == null ? String.valueOf(views) : redisUtil.getValues(KEY_VIEW + id);
+            response.addViews(Long.parseLong(values));
+        }
+
+        return page;
     }
 
     public BoardFindByIdResponse boardFindById(Long boardId) {
