@@ -10,6 +10,7 @@ import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
+import carrotMarcket.marcket.board.response.BoardLikeResponse;
 import carrotMarcket.marcket.global.redis.RedisService;
 import carrotMarcket.marcket.global.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,17 @@ public class BoardService {
 
         // redis 활용한 조회수
         String view = this.views(board);
+        BoardFindByIdResponse response = BoardFindByIdResponse.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .text(board.getText())
+                .boardStatus(board.getBoardStatus())
+                .regID(board.getRegID())
+                .regDate(board.getRegDate())
+                .views(Long.parseLong(view))
+                .build();
 
-        return new BoardFindByIdResponse(board, Long.parseLong(view));
+        return response;
     }
 
     public String views(Board board) {
@@ -77,9 +87,24 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-    public boolean like(BoardLikeDto boardLikeDto) {
+    public BoardLikeResponse like(BoardLikeDto boardLikeDto) {
         boardRepository.findById(boardLikeDto.getBoardId()).orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
-        return redisService.like(boardLikeDto);
+
+        Long boardId = boardLikeDto.getBoardId();
+        String userId = boardLikeDto.getUserId();
+        Boolean like = boardLikeDto.getLike();
+        if (like == false) {
+            redisUtil.like(KEY_LIKE + boardId, userId);
+        } else {
+            redisUtil.unLike(KEY_LIKE + boardId, userId);
+        }
+
+        BoardLikeResponse response = BoardLikeResponse.builder()
+                .likeCnt(redisUtil.getLikeCount(KEY_LIKE + boardId))
+                .like(redisUtil.isLike(KEY_LIKE + boardId, userId))
+                .build();
+
+        return response;
     }
 
 }

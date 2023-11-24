@@ -6,6 +6,7 @@ import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
+import carrotMarcket.marcket.board.response.BoardLikeResponse;
 import carrotMarcket.marcket.board.service.BoardService;
 import carrotMarcket.marcket.global.response.ApiResponse;
 import io.swagger.annotations.Api;
@@ -65,7 +66,7 @@ public class BoardController {
     @PostMapping("/like")
     @ApiOperation(value="좋아요 API", notes="게시글에대한 좋아요 정보 수정")
     public ResponseEntity<?> BoardLike(@RequestBody @Valid BoardLikeDto boardLikeDto) {
-        boolean like = boardService.like(boardLikeDto);
+        BoardLikeResponse like = boardService.like(boardLikeDto);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(like));
     }
 }
