@@ -46,6 +46,7 @@ class BoardServiceTest {
                 .mapToObj(i -> Board.builder()
                         .text("text" + i)
                         .title("title" + i)
+                        .views(0L)
                         .build()
                 ).collect(Collectors.toList());
 

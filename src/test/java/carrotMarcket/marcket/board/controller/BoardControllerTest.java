@@ -58,6 +58,7 @@ class BoardControllerTest {
                 .mapToObj(i -> Board.builder()
                         .title("title" + i)
                         .text("text" + i)
+                        .views(0L)
                         .build()
                 ).collect(Collectors.toList());
         boardRepository.saveAll(list);
