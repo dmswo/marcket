@@ -12,7 +12,6 @@ import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardLikeResponse;
 import carrotMarcket.marcket.board.response.BoardListResponse;
-import carrotMarcket.marcket.global.redis.RedisService;
 import carrotMarcket.marcket.global.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,17 +19,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final RedisService redisService;
     private final RedisUtil redisUtil;
 
     private static final String KEY_VIEW = "board:view:";

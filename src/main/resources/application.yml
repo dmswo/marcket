@@ -35,8 +35,18 @@ spring:
     host: 127.0.0.1
     port: 6379
 
+  config:
+    import: 'aws-parameterstore:'
+
+aws:
+  paramstore:
+    enabled: true
+    prefix: /marcket
+    profile-separator: _
+    name: jwt
+
 jwt:
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  secret: ${secret}
 
 management:
   endpoints:
@@ -49,8 +59,12 @@ spring:
   config:
     activate:
       on-profile: was1
+
 server:
   port: 8090
+
+jwt:
+  secret: ${secret}
 
 ---
 spring:
@@ -59,3 +73,6 @@ spring:
       on-profile: was2
 server:
   port: 8091
+
+jwt:
+  secret: ${secret}

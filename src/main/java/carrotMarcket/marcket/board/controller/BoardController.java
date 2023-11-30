@@ -1,6 +1,5 @@
 package carrotMarcket.marcket.board.controller;
 
-import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.request.BoardLikeDto;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.BoardListDto;

@@ -1,10 +1,8 @@
 package carrotMarcket.marcket.board.response;
 
 import carrotMarcket.marcket.board.constant.BoardStatus;
-import carrotMarcket.marcket.board.entity.Comment;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
-import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 
