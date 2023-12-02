@@ -46,7 +46,7 @@ aws:
     name: parameter
 
 jwt:
-  secret: ${secret}
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
 
 management:
   endpoints:
@@ -59,37 +59,15 @@ spring:
   config:
     activate:
       on-profile: was1
-  datasource:
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
 
 server:
   port: 8090
-
-jwt:
-  secret: ${secret}
 
 ---
 spring:
   config:
     activate:
       on-profile: was2
-  datasource:
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
 
 server:
   port: 8091
-
-jwt:
-  secret: ${secret}
