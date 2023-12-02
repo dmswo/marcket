@@ -43,7 +43,7 @@ aws:
     enabled: true
     prefix: /marcket
     profile-separator: _
-    name: jwt
+    name: parameter
 
 jwt:
   secret: ${secret}
