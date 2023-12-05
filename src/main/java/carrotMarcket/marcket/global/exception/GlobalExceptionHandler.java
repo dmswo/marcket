@@ -18,8 +18,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.failResponse(bindingResult));
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ApiResponse> handleBusinessException(BusinessException e) {
+        log.info("handleBusinessException e.code : {}, e.message : {}", e.getExceptionCode().getCode(), e.getMessage());
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.errorResponse(e.getExceptionCode()));
     }
 }
