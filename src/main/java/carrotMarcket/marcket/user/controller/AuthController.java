@@ -6,18 +6,17 @@ import carrotMarcket.marcket.user.request.TokenRequestDto;
 import carrotMarcket.marcket.user.request.JoinRequest;
 import carrotMarcket.marcket.user.request.LoginRequest;
 import carrotMarcket.marcket.user.response.UserResponseDto;
+import carrotMarcket.marcket.user.response.myBoardDto;
 import carrotMarcket.marcket.user.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -45,5 +44,12 @@ public class AuthController {
     public ResponseEntity<ApiResponse> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         TokenDto reissue = authService.reissue(tokenRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(reissue));
+    }
+
+    @GetMapping("/myBoardList")
+    @ApiOperation(value="내가 쓴글 조회 API", notes="내가 등록한 게시글 전체를 조회합니다.")
+    public ResponseEntity<?> myBoardList(@RequestParam Long userId) {
+        List<myBoardDto> list = authService.myBoardList(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(list));
     }
 }

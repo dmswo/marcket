@@ -1,5 +1,6 @@
 package carrotMarcket.marcket.user.service;
 
+import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.global.jwt.TokenProvider;
 import carrotMarcket.marcket.user.entity.RefreshToken;
 import carrotMarcket.marcket.user.entity.Users;
@@ -12,15 +13,18 @@ import carrotMarcket.marcket.user.request.TokenRequestDto;
 import carrotMarcket.marcket.user.request.JoinRequest;
 import carrotMarcket.marcket.user.request.LoginRequest;
 import carrotMarcket.marcket.user.response.UserResponseDto;
+import carrotMarcket.marcket.user.response.myBoardDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -105,5 +109,11 @@ public class AuthService {
 
         // 토큰 발급
         return tokenDto;
+    }
+
+    public List<myBoardDto> myBoardList(Long userId) {
+        List<Board> list = userRepository.myBoardList(userId);
+        List<myBoardDto> myBoard = list.stream().map(o -> new myBoardDto(o)).collect(Collectors.toList());
+        return myBoard;
     }
 }

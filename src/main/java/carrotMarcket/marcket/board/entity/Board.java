@@ -39,7 +39,7 @@ public class Board extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private final List<Comment> reply = new ArrayList<>();
+    private final List<Comment> comment = new ArrayList<>();
 
     public void update(String title, String text) {
         this.title = title;
