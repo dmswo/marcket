@@ -83,6 +83,7 @@ class CommentControllerTest {
 
     @Test
     @DisplayName("답변 작성 성공")
+    @WithCustomMockUser
     public void saveSuccess() throws Exception {
         // given
         BoardSaveDto boardSave = BoardSaveDto.builder()

@@ -113,7 +113,7 @@ class BoardControllerTest {
         String json = objectMapper.writeValueAsString(save);
 
         // when
-        mockMvc.perform(post("/board/save").header("Bearer", "ABCDE")
+        mockMvc.perform(post("/board/save")
                 .contentType(APPLICATION_JSON)
                 .content(json)
         )

@@ -1,6 +1,5 @@
 package carrotMarcket.marcket.global.config;
 
-import carrotMarcket.marcket.user.entity.Users;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

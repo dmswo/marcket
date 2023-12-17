@@ -9,5 +9,5 @@ import java.lang.annotation.RetentionPolicy;
 @WithSecurityContext(factory = WithCustomMockUserSecurityContextFactory.class)
 public @interface WithCustomMockUser {
 
-    String email() default "dmswo106";
+    String email() default "dmswo106@naver.com";
 }
