@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,7 +92,8 @@ class CommentControllerTest {
                 .title("title1")
                 .build();
 
-        Long save = boardService.save(boardSave);
+        List<MultipartFile> multipartFileList = List.of();
+        Long save = boardService.save(boardSave, multipartFileList);
 
         CommentSaveDto replySave = CommentSaveDto.builder()
                 .boardId(save)

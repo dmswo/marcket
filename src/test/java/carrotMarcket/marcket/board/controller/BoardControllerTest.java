@@ -16,8 +16,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -88,7 +92,9 @@ class BoardControllerTest {
                 .title("title1")
                 .build();
 
-        Long boardId = boardService.save(save);
+        List<MultipartFile> multipartFileList = List.of();
+
+        Long boardId = boardService.save(save, multipartFileList);
 
         // expected
         mockMvc.perform(get("/board/boardFindById?boardId="+boardId).header("Bearer", "ABCDE")
@@ -111,12 +117,17 @@ class BoardControllerTest {
                 .build();
 
         String json = objectMapper.writeValueAsString(save);
+        MockMultipartFile files = new MockMultipartFile("files", "tooth.png", "image/png", "files".getBytes());
+        MockMultipartFile boardSaveDto = new MockMultipartFile("boardSaveDto", null, "application/json", json.getBytes(StandardCharsets.UTF_8));
 
         // when
-        mockMvc.perform(post("/board/save")
-                .contentType(APPLICATION_JSON)
-                .content(json)
-        )
+        mockMvc.perform(multipart("/board/save")
+                        .file(files)
+                        .file(boardSaveDto)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
                 .andExpect(status().isOk())
                 .andDo(print());
 
@@ -138,12 +149,17 @@ class BoardControllerTest {
                 .build();
 
         String json = objectMapper.writeValueAsString(save);
+        MockMultipartFile files = new MockMultipartFile("files", "tooth.png", "image/png", "files".getBytes());
+        MockMultipartFile boardSaveDto = new MockMultipartFile("boardSaveDto", null, "application/json", json.getBytes(StandardCharsets.UTF_8));
 
         // expect
-        mockMvc.perform(post("/board/save").header("Bearer", "ABCDE")
-                .contentType(APPLICATION_JSON)
-                .content(json)
-        )
+        mockMvc.perform(multipart("/board/save")
+                        .file(files)
+                        .file(boardSaveDto)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("FAIL"))
                 .andExpect(jsonPath("$.data.title").value("타이틀을 입력해주세요."))

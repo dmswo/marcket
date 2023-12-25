@@ -18,7 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,13 +76,16 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 작성")
-    public void save() {
+    public void save() throws IOException {
         //given
         BoardSaveDto boardSave = BoardSaveDto.builder()
                 .title("title")
                 .text("text")
                 .build();
-        Long save = boardService.save(boardSave);
+
+        List<MultipartFile> multipartFileList = List.of();
+
+        Long save = boardService.save(boardSave, multipartFileList);
 
         CommentSaveDto commentSave = CommentSaveDto.builder()
                 .text("comment1")
@@ -98,13 +104,16 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 수정")
-    public void update() {
+    public void update() throws IOException {
         //given
         BoardSaveDto boardSave = BoardSaveDto.builder()
                 .title("title")
                 .text("text")
                 .build();
-        Long save = boardService.save(boardSave);
+
+        List<MultipartFile> multipartFileList = List.of();
+
+        Long save = boardService.save(boardSave, multipartFileList);
 
         CommentSaveDto commentSave = CommentSaveDto.builder()
                 .text("comment1")
@@ -126,13 +135,19 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("댓글 삭제")
-    public void delete() {
+    public void delete() throws IOException {
         //given
         BoardSaveDto save = BoardSaveDto.builder()
                 .text("text")
                 .title("title")
                 .build();
-        Long boardId = boardService.save(save);
+
+        List<MultipartFile> multipartFileList = List.of(
+                new MockMultipartFile("image", "404.png", "image/png","image".getBytes()),
+                new MockMultipartFile("image2","raspberry.png", "image/png","image2".getBytes())
+        );
+
+        Long boardId = boardService.save(save, multipartFileList);
 
         CommentSaveDto answerSave = CommentSaveDto.builder()
                 .text("comment")

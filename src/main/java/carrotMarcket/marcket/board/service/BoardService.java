@@ -1,6 +1,8 @@
 package carrotMarcket.marcket.board.service;
 
 import carrotMarcket.marcket.board.entity.Board;
+import carrotMarcket.marcket.board.entity.BoardFile;
+import carrotMarcket.marcket.board.repository.BoardFileRepository;
 import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.exception.BoardBusinessException;
@@ -13,11 +15,17 @@ import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardLikeResponse;
 import carrotMarcket.marcket.board.response.BoardListResponse;
 import carrotMarcket.marcket.global.redis.RedisUtil;
+import carrotMarcket.marcket.global.util.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardFileRepository boardFileRepository;
     private final RedisUtil redisUtil;
+    private final FileUpload fileUpload;
 
     private static final String KEY_VIEW = "board:view:";
     private static final String KEY_LIKE = "board:like:";
@@ -74,7 +84,8 @@ public class BoardService {
         return redisUtil.getValues(KEY_VIEW + boardId);
     }
 
-    public Long save(BoardSaveDto boardSaveDto) {
+    public Long save(BoardSaveDto boardSaveDto, List<MultipartFile> multipartFile) throws IOException {
+        // Board 저장
         Board board = Board.builder()
                 .title(boardSaveDto.getTitle())
                 .text(boardSaveDto.getText())
@@ -82,6 +93,15 @@ public class BoardService {
                 .views(0L)
                 .build();
 
+        // BoardFile 저장
+        List<BoardFile> fileList = new ArrayList<>();
+        for (MultipartFile file : multipartFile) {
+            String fileUrl = fileUpload.uploadFile(file, "board");
+            BoardFile boardFile = BoardFile.builder().fileUrl(fileUrl).board(board).build();
+            fileList.add(boardFile);
+        }
+
+        boardFileRepository.saveAll(fileList);
         Board save = boardRepository.save(board);
         return save.getId();
     }

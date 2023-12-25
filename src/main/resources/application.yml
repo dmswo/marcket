@@ -38,6 +38,16 @@ spring:
   config:
     import: 'aws-parameterstore:'
 
+cloud:
+  aws:
+    s3:
+      bucket: marcket
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ${accessKey}
+      secretKey: ${secretKey}
+
 aws:
   paramstore:
     enabled: true

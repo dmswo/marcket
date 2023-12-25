@@ -15,5 +15,4 @@ public class BoardSaveDto {
     @NotBlank(message = "텍스트를 입력해주세요.")
     private String text;
 
-
 }

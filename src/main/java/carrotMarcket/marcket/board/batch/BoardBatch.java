@@ -20,7 +20,7 @@ public class BoardBatch {
     private final RedisUtil redisUtil;
     private final BoardRepository boardRepository;
 
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0/60 * * * ?")
     @Transactional
     public void BoardViewsRedisToDB () {
         Set<String> keys = redisUtil.getKeys("board:view:*");
