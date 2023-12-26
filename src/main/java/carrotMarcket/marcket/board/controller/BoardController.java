@@ -6,12 +6,11 @@ import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardLikeResponse;
+import carrotMarcket.marcket.board.response.BoardListResponse;
 import carrotMarcket.marcket.board.service.BoardService;
 import carrotMarcket.marcket.global.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public class BoardController {
     @PostMapping("/list")
     @ApiOperation(value="게시글 조회 API", notes="등록된 게시글 전체를 조회합니다.")
     public ResponseEntity<?> BoardList(@RequestBody BoardListDto boardListDto, Pageable pageable) {
-        Page list = boardService.boardList(boardListDto, pageable);
+        Page<BoardListResponse> list = boardService.boardList(boardListDto, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(list));
     }
 
@@ -50,7 +49,7 @@ public class BoardController {
     @PostMapping(value = "/save", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(value="게시글 등록 API", notes="게시글을 등록합니다.")
     public ResponseEntity<?> BoardSave(@RequestPart @Valid BoardSaveDto boardSaveDto
-            , @RequestPart List<MultipartFile> files) throws IOException {
+            , @RequestPart(required = false) List<MultipartFile> files) throws IOException {
         Long board = boardService.save(boardSaveDto, files);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(board));
     }

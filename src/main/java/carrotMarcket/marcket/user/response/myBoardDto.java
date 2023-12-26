@@ -17,7 +17,7 @@ public class myBoardDto {
     private String title;
     private BoardStatus status;
     private LocalDateTime regDate;
-    private List<carrotMarcket.marcket.user.response.myBoardCommentDto> myBoardCommentDto;
+    private List<myBoardCommentDto> myBoardCommentDto;
 
     public myBoardDto(Board board) {
         this.id = board.getId();

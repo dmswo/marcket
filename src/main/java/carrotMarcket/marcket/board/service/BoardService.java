@@ -33,14 +33,13 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final BoardFileRepository boardFileRepository;
     private final RedisUtil redisUtil;
     private final FileUpload fileUpload;
 
     private static final String KEY_VIEW = "board:view:";
     private static final String KEY_LIKE = "board:like:";
 
-    public Page boardList(BoardListDto boardListDto, Pageable pageable) {
+    public Page<BoardListResponse> boardList(BoardListDto boardListDto, Pageable pageable) {
         Page<BoardListResponse> page = boardRepository.boardList(boardListDto, pageable);
 
         for (BoardListResponse response : page) {
@@ -96,13 +95,16 @@ public class BoardService {
         // BoardFile 저장
         List<BoardFile> fileList = new ArrayList<>();
         for (MultipartFile file : multipartFile) {
-            String fileUrl = fileUpload.uploadFile(file, "board");
-            BoardFile boardFile = BoardFile.builder().fileUrl(fileUrl).board(board).build();
-            fileList.add(boardFile);
+            if (!file.isEmpty()) {
+                String fileUrl = fileUpload.uploadFile(file, "board");
+                BoardFile boardFile = BoardFile.builder().fileUrl(fileUrl).board(board).build();
+                fileList.add(boardFile);
+            }
         }
 
-        boardFileRepository.saveAll(fileList);
+        board.addBoardFile(fileList);
         Board save = boardRepository.save(board);
+
         return save.getId();
     }
 

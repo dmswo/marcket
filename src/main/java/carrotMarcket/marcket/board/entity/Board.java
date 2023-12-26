@@ -39,11 +39,11 @@ public class Board extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private final List<Comment> comment = new ArrayList<>();
+    private List<Comment> comment;
 
     @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private final List<BoardFile> boardFile = new ArrayList<>();
+    private List<BoardFile> boardFile;
 
     public void update(String title, String text) {
         this.title = title;
@@ -52,5 +52,9 @@ public class Board extends BaseEntity {
 
     public void updateViews(Long views) {
         this.views = views;
+    }
+
+    public void addBoardFile(List<BoardFile> boardFile) {
+        this.boardFile = boardFile;
     }
 }
