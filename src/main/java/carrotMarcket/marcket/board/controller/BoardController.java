@@ -1,8 +1,8 @@
 package carrotMarcket.marcket.board.controller;
 
+import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.request.BoardLikeDto;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
-import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardLikeResponse;
@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +33,13 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ApiOperation(value="게시글 조회 API", notes="등록된 게시글 전체를 조회합니다.")
-    public ResponseEntity<?> BoardList(@RequestBody BoardListDto boardListDto, Pageable pageable) {
-        Page<BoardListResponse> list = boardService.boardList(boardListDto, pageable);
+    public ResponseEntity<?> BoardList(@RequestParam(required = false) BoardStatus status
+            , @RequestParam(required = false) String title
+            , Pageable pageable) {
+//        Pageable pageable = PageRequest.of(page, size);
+        Page<BoardListResponse> list = boardService.boardList(status, title, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(list));
     }
 

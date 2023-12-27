@@ -1,9 +1,10 @@
 package carrotMarcket.marcket.board.repository;
 
-import carrotMarcket.marcket.board.request.BoardListDto;
+import carrotMarcket.marcket.board.constant.BoardStatus;
+import carrotMarcket.marcket.board.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BoardCustomRepository {
-    Page boardList(BoardListDto boardListDto, Pageable pageable);
+    Page<Board> boardList(BoardStatus status, String title, Pageable pageable);
 }

@@ -1,8 +1,5 @@
 package carrotMarcket.marcket.board.controller;
 
-import carrotMarcket.marcket.board.entity.Comment;
-import carrotMarcket.marcket.board.request.BoardListDto;
-import carrotMarcket.marcket.board.request.BoardUpdateDto;
 import carrotMarcket.marcket.board.request.CommentSaveDto;
 import carrotMarcket.marcket.board.request.CommentUpdateDto;
 import carrotMarcket.marcket.board.service.CommentService;

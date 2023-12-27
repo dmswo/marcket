@@ -4,7 +4,6 @@ import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
-import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.service.BoardService;
 import carrotMarcket.marcket.mock.WithCustomMockUser;
@@ -67,15 +66,9 @@ class BoardControllerTest {
                 ).collect(Collectors.toList());
         boardRepository.saveAll(list);
 
-        BoardListDto search = BoardListDto.builder()
-                .build();
-
-        String json = objectMapper.writeValueAsString(search);
-
         // expected
-        mockMvc.perform(post("/board/list?page=1")
+        mockMvc.perform(get("/board/list?page=1")
                 .contentType(APPLICATION_JSON)
-                .content(json)
         )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.content.length()", is(10)))

@@ -8,7 +8,6 @@ import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.entity.Comment;
 import carrotMarcket.marcket.board.exception.BoardBusinessException;
 import carrotMarcket.marcket.board.exception.BoardExceptionCode;
-import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.CommentSaveDto;
 import carrotMarcket.marcket.board.request.CommentUpdateDto;
 import carrotMarcket.marcket.board.response.CommentListResponse;

@@ -36,3 +36,12 @@ out/
 
 ### VS Code ###
 .vscode/
+logs/application.log
+logs/err_application.log
+src/main/generated/carrotMarcket/marcket/board/entity/QBoard.java
+src/main/generated/carrotMarcket/marcket/board/entity/QBoardFile.java
+src/main/generated/carrotMarcket/marcket/board/entity/QComment.java
+src/main/generated/carrotMarcket/marcket/board/response/QBoardListResponse.java
+src/main/generated/carrotMarcket/marcket/global/entity/QBaseEntity.java
+src/main/generated/carrotMarcket/marcket/user/entity/QRefreshToken.java
+src/main/generated/carrotMarcket/marcket/user/entity/QUsers.java

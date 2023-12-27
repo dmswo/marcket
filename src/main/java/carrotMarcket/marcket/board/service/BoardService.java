@@ -2,14 +2,12 @@ package carrotMarcket.marcket.board.service;
 
 import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.entity.BoardFile;
-import carrotMarcket.marcket.board.repository.BoardFileRepository;
 import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.exception.BoardBusinessException;
 import carrotMarcket.marcket.board.exception.BoardExceptionCode;
 import carrotMarcket.marcket.board.request.BoardLikeDto;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
-import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardLikeResponse;
@@ -39,17 +37,18 @@ public class BoardService {
     private static final String KEY_VIEW = "board:view:";
     private static final String KEY_LIKE = "board:like:";
 
-    public Page<BoardListResponse> boardList(BoardListDto boardListDto, Pageable pageable) {
-        Page<BoardListResponse> page = boardRepository.boardList(boardListDto, pageable);
+    public Page<BoardListResponse> boardList(BoardStatus status, String title, Pageable pageable) {
+        Page<Board> page = boardRepository.boardList(status, title, pageable);
+        Page<BoardListResponse> result = page.map(o -> new BoardListResponse(o));
 
-        for (BoardListResponse response : page) {
+        for (BoardListResponse response : result) {
             Long id = response.getId();
             Long views = response.getViews();
             String values = redisUtil.getValues(KEY_VIEW + id) == null ? String.valueOf(views) : redisUtil.getValues(KEY_VIEW + id);
             response.addViews(Long.parseLong(values));
         }
 
-        return page;
+        return result;
     }
 
     public BoardFindByIdResponse boardFindById(Long boardId) {

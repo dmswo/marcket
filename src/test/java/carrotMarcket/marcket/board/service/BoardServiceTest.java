@@ -4,7 +4,6 @@ import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.constant.BoardStatus;
 import carrotMarcket.marcket.board.repository.BoardRepository;
 import carrotMarcket.marcket.board.request.BoardUpdateDto;
-import carrotMarcket.marcket.board.request.BoardListDto;
 import carrotMarcket.marcket.board.request.BoardSaveDto;
 import carrotMarcket.marcket.board.response.BoardFindByIdResponse;
 import carrotMarcket.marcket.board.response.BoardListResponse;
@@ -17,12 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,6 +47,7 @@ class BoardServiceTest {
                 .mapToObj(i -> Board.builder()
                         .text("text" + i)
                         .title("title" + i)
+                        .boardStatus(BoardStatus.WAIT)
                         .views(0L)
                         .build()
                 ).collect(Collectors.toList());
@@ -61,11 +57,11 @@ class BoardServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         //when
-        BoardListDto search = BoardListDto.builder().build();
-        Page page = boardService.boardList(search, pageable);
+        Page page = boardService.boardList(BoardStatus.WAIT, null, pageable);
 
         //then
         List<BoardListResponse> content = page.getContent();
+        System.out.println(content);
         assertEquals(10L, page.getSize());
         assertEquals(3L, page.getTotalPages());
         assertEquals(10L, content.size());

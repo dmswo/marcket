@@ -1,9 +1,8 @@
 package carrotMarcket.marcket.board.repository;
 
 import carrotMarcket.marcket.board.constant.BoardStatus;
-import carrotMarcket.marcket.board.request.BoardListDto;
+import carrotMarcket.marcket.board.entity.Board;
 import carrotMarcket.marcket.board.response.BoardListResponse;
-import carrotMarcket.marcket.board.response.QBoardListResponse;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -26,19 +25,17 @@ public class BoardCustomRepositoryImpl implements BoardCustomRepository {
     }
 
     @Override
-    public Page boardList(BoardListDto boardListDto, Pageable pageable) {
-        List<BoardListResponse> content = queryFactory.select(new QBoardListResponse(board.id, board.title, board.boardStatus, board.regDate, board.views))
-                .from(board)
-                .where(statusEq(boardListDto.getStatus())
-                        , titleContains(boardListDto.getTitle()))
+    public Page<Board> boardList(BoardStatus status, String title, Pageable pageable) {
+        List<Board> content = queryFactory.selectFrom(board)
+                .where(statusEq(status)
+                        , titleContains(title))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<BoardListResponse> count = queryFactory.select(new QBoardListResponse(board.id, board.title, board.boardStatus, board.regDate, board.views))
-                .from(board)
-                .where(statusEq(boardListDto.getStatus())
-                        , titleContains(boardListDto.getTitle()));
+        JPAQuery<Board> count = queryFactory.selectFrom(board)
+                .where(statusEq(status)
+                        , titleContains(title));
 
         return PageableExecutionUtils.getPage(content, pageable, count::fetchCount);
     }

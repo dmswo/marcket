@@ -1,14 +1,15 @@
 package carrotMarcket.marcket.board.response;
 
 import carrotMarcket.marcket.board.constant.BoardStatus;
-import com.querydsl.core.annotations.QueryProjection;
+import carrotMarcket.marcket.board.entity.Board;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
-@Builder
 @NoArgsConstructor
 public class BoardListResponse {
 
@@ -17,14 +18,17 @@ public class BoardListResponse {
     private BoardStatus status;
     private LocalDateTime regDate;
     private Long views;
+    private List<BoardFileResponse> boardFileResponseList;
 
-    @QueryProjection
-    public BoardListResponse(Long id, String title, BoardStatus status, LocalDateTime regDate, Long views) {
-        this.id = id;
-        this.title = title;
-        this.status = status;
-        this.regDate = regDate;
-        this.views = views;
+
+    public BoardListResponse(Board board) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.status = board.getBoardStatus();
+        this.regDate = board.getRegDate();
+        this.views = board.getViews();
+        this.boardFileResponseList = board.getBoardFile().stream()
+                .map(o -> new BoardFileResponse(o)).collect(Collectors.toList());
     }
 
     public void addViews(Long views) {

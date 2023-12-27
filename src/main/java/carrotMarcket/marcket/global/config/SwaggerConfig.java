@@ -1,5 +1,7 @@
 package carrotMarcket.marcket.global.config;
 
+import io.micrometer.core.lang.Nullable;
+import lombok.Getter;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -11,6 +13,7 @@ import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandl
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -41,7 +44,8 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("carrotMarcket.marcket"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .directModelSubstitute(Pageable.class, SwaggerPageable.class);
     }
 
     private ApiInfo apiInfo() {
@@ -94,5 +98,18 @@ public class SwaggerConfig {
                                                String basePath) {
         return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath)
                 || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+    }
+
+    // swagger에서 page, size로 변경
+    @Getter
+    private static class SwaggerPageable {
+        @Nullable
+        private Integer size;
+
+        @Nullable
+        private Integer page;
+
+        @Nullable
+        private String sort;
     }
 }
