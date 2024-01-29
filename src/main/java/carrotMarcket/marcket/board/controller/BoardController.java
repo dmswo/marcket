@@ -38,7 +38,6 @@ public class BoardController {
     public ResponseEntity<?> BoardList(@RequestParam(required = false) BoardStatus status
             , @RequestParam(required = false) String title
             , Pageable pageable) {
-//        Pageable pageable = PageRequest.of(page, size);
         Page<BoardListResponse> list = boardService.boardList(status, title, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successResponse(list));
     }

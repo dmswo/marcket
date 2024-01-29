@@ -10,6 +10,19 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kimeun106@gmail.com
+    password: ${emailPassword}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+
   jpa:
     hibernate:
       ddl-auto: create # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
