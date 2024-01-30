@@ -42,7 +42,7 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtTokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/*/*list", "/*/*ById").permitAll()
-                .antMatchers("/board/*").authenticated()
+//                .antMatchers("/board/*").authenticated()
                 .anyRequest().permitAll();
         http
                 .exceptionHandling()
