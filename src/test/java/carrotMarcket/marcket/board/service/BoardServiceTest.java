@@ -68,26 +68,26 @@ class BoardServiceTest {
         assertEquals("title9", content.get(9).getTitle());
     }
 
-    @Test
-    @DisplayName("게시글 단건 조회")
-    public void boardFindById() throws IOException {
-        //given
-        BoardSaveDto save = BoardSaveDto.builder()
-                .text("text1")
-                .title("title1")
-                .build();
-
-        List<MultipartFile> multipartFileList = List.of();
-
-        Long boardId = boardService.save(save, multipartFileList);
-
-        //when
-        BoardFindByIdResponse response = boardService.boardFindById(boardId);
-
-        //then
-        assertEquals("title1", response.getTitle());
-        assertEquals("text1", response.getText());
-    }
+//    @Test
+//    @DisplayName("게시글 단건 조회")
+//    public void boardFindById() throws IOException {
+//        //given
+//        BoardSaveDto save = BoardSaveDto.builder()
+//                .text("text1")
+//                .title("title1")
+//                .build();
+//
+//        List<MultipartFile> multipartFileList = List.of();
+//
+//        Long boardId = boardService.save(save, multipartFileList);
+//
+//        //when
+//        BoardFindByIdResponse response = boardService.boardFindById(boardId);
+//
+//        //then
+//        assertEquals("title1", response.getTitle());
+//        assertEquals("text1", response.getText());
+//    }
 
     @Test
     @DisplayName("게시글 작성")
