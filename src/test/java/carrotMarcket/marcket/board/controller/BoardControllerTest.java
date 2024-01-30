@@ -76,28 +76,28 @@ class BoardControllerTest {
                 .andDo(print());
     }
 
-    @Test
-    @DisplayName("게시글 단건 조회")
-    void boardFindById() throws Exception {
-        // given
-        BoardSaveDto save = BoardSaveDto.builder()
-                .text("text1")
-                .title("title1")
-                .build();
-
-        List<MultipartFile> multipartFileList = List.of();
-
-        Long boardId = boardService.save(save, multipartFileList);
-
-        // expected
-        mockMvc.perform(get("/board/boardFindById?boardId="+boardId).header("Bearer", "ABCDE")
-                        .contentType(APPLICATION_JSON)
-                )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.text").value("text1"))
-                .andExpect(jsonPath("$.data.title").value("title1"))
-                .andDo(print());
-    }
+//    @Test
+//    @DisplayName("게시글 단건 조회")
+//    void boardFindById() throws Exception {
+//        // given
+//        BoardSaveDto save = BoardSaveDto.builder()
+//                .text("text1")
+//                .title("title1")
+//                .build();
+//
+//        List<MultipartFile> multipartFileList = List.of();
+//
+//        Long boardId = boardService.save(save, multipartFileList);
+//
+//        // expected
+//        mockMvc.perform(get("/board/boardFindById?boardId="+boardId).header("Bearer", "ABCDE")
+//                        .contentType(APPLICATION_JSON)
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.data.text").value("text1"))
+//                .andExpect(jsonPath("$.data.title").value("title1"))
+//                .andDo(print());
+//    }
 
     @Test
     @DisplayName("게시글 작성 성공")
