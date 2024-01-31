@@ -55,7 +55,7 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
 
         // redis 활용한 조회수
-//        String view = this.views(board);
+        String view = this.views(board);
         BoardFindByIdResponse response = BoardFindByIdResponse.builder()
                 .id(board.getId())
                 .title(board.getTitle())
@@ -63,7 +63,7 @@ public class BoardService {
                 .boardStatus(board.getBoardStatus())
                 .regID(board.getRegID())
                 .regDate(board.getRegDate())
-//                .views(Long.parseLong(view))
+                .views(Long.parseLong(view))
                 .build();
 
         return response;
