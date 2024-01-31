@@ -27,7 +27,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class BoardService {
 
     private final BoardRepository boardRepository;
@@ -82,7 +82,6 @@ public class BoardService {
         return redisUtil.getValues(KEY_VIEW + boardId);
     }
 
-    @Transactional
     public Long save(BoardSaveDto boardSaveDto, List<MultipartFile> multipartFile) throws IOException {
         // Board 저장
         Board board = Board.builder()
@@ -108,13 +107,11 @@ public class BoardService {
         return save.getId();
     }
 
-    @Transactional
     public void update(Long id, BoardUpdateDto boardUpdateDto) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new BoardBusinessException(BoardExceptionCode.NOT_EXIST_BOARD));
         board.update(boardUpdateDto.getTitle(), boardUpdateDto.getText());
     }
 
-    @Transactional
     public void deleteById(Long id) {
         boardRepository.deleteById(id);
     }
